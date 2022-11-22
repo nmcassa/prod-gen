@@ -25,5 +25,9 @@ int main() {
     
     printTable(base, 10, 10);
 
+    cout << endl;
+
+    printTable(convol(10, 10, base), 10, 10);
+
     return 1;
 }

@@ -49,3 +49,21 @@ int** buildLayer(int row, int col, int** arr, int iter) {
 
     return arr;
 }
+
+//should be improved so that it convolutes correctly beyond
+//the boundaries of the row
+//THis will create a larger row that can then be shrunk on 
+//either side
+//this currently starts at index 2 instead of 0
+int** convol(int row, int col, int** arr) {
+    for (int i = 0; i < row; i++) {
+        for (int j = 2; j < col - 2; j++) {
+            int sum = (arr[i][j] + arr[i][j-1] + arr[i][j-2]
+                        + arr[i][j+1] + arr[i][j+2]) / 5;
+
+            arr[i][j] = sum;
+        }
+    }
+
+    return arr;
+}
