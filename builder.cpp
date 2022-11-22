@@ -37,6 +37,23 @@ int checkAround(int row, int col, int** arr, int cRow, int cCol, int iter) {
     return ret;
 }
 
+int gatherAround(int row, int col, int** arr, int cRow, int cCol) { 
+    int sum = 0;
+    
+    for (int i = cRow - 1; i <= cRow + 1; i++) {
+        for (int j = cCol - 1; j <= cCol + 1; j++) {
+            if (i == -1 || j == -1 || i == row || j == col) {
+                continue;
+            } else {
+                sum = sum + arr[i][j];
+            }
+        }
+    }
+
+    return sum;
+}
+
+
 int** buildLayer(int row, int col, int** arr, int iter) {
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
@@ -50,20 +67,14 @@ int** buildLayer(int row, int col, int** arr, int iter) {
     return arr;
 }
 
-//should be improved so that it convolutes correctly beyond
-//the boundaries of the row
-//THis will create a larger row that can then be shrunk on 
-//either side
-//this currently starts at index 2 instead of 0
 int** convol(int row, int col, int** arr) {
+    int** n_arr = new int*[row];
     for (int i = 0; i < row; i++) {
-        for (int j = 2; j < col - 2; j++) {
-            int sum = (arr[i][j] + arr[i][j-1] + arr[i][j-2]
-                        + arr[i][j+1] + arr[i][j+2]) / 5;
-
-            arr[i][j] = sum;
+        n_arr[i] = new int[col];
+        for (int j = 0; j < col; j++) {
+            n_arr[i][j] = gatherAround(row, col, arr, i, j) / 9;
         }
     }
 
-    return arr;
+    return n_arr;
 }
