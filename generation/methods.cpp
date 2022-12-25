@@ -1,4 +1,5 @@
 #include "methods.hpp"
+#include "builder.hpp"
 
 using namespace std;
 
@@ -28,4 +29,18 @@ void printTable(int** table, int row, int col) {
         }
         cout << endl;
     }
+}
+
+int** retConvol(int row, int col) {
+    srand (time(NULL));
+
+    int seed = rand();
+
+    int** base = createBase(10, 10);
+
+    for (int i = 1; i <= 20; i++) {
+        base = buildLayer(10, 10, base, i);
+    }
+
+    return convol(10, 10, base);
 }
